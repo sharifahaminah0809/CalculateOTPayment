@@ -1,4 +1,8 @@
-//10 Nov 2022
+/*
+ Created by: Sharifah Aminah binti Said Mohamed
+ Date: 16 November 2022
+ */
+
 import java.util.*;
 import java.text.DecimalFormat;
 
@@ -23,8 +27,6 @@ public class CalculateOT {
 		//read input days
 		int day = sc.nextInt();
 		
-		//initialize total payment
-		double totalPayment = 0.00;
 		
 		//create List type String to save input Date
 		List<String> dateList = new ArrayList<String>();
@@ -35,12 +37,15 @@ public class CalculateOT {
 		//create array list to save the total Minutes
 		ArrayList<Double> minutesList = new ArrayList<>();
 		
+		//initialize total payment
+		double totalPayment = 0.00;
+		
 		//loop untuk day
 		for(int d=1; d<=day; d++) 
 		{
 			System.out.println("\n\tDay " + d);
 			
-			System.out.println("\nDate: ");
+			System.out.println("\nDate(d/m):");
 			
 			//read input String
 			String dayDate = sc.next();
@@ -49,64 +54,67 @@ public class CalculateOT {
 			dateList.add(dayDate);
 			
 			//prompt user to input time they join in
-			System.out.println("How many times you join in?");
+			System.out.println("\nEnter all the Duration (separete it by ',' Ex: 450,123,10,15)");
 			
-			//read input in integer
-			int join = sc.nextInt();
-			
-			//declare variable joinMinutes
-			double joinMinutes = 0; 
-			
-			//declare variable totalMinutes
-			double totalMinutes = 0;
+			//read all the durations in String
+			String durationsI = sc.next();
 			
 			
-			//create loop for join in
-			for(int i=1; i<=join; i++) {
-				System.out.println("Total Minutes " + i + ": ");
-				joinMinutes = sc.nextInt();
+			//initialize total duration
+			double totalDuration = 0.00;
+			
+			//use delimit to get the separate duration by comma, get the object from String Input
+			String[] durationList = durationsI.split(",");
+			
+			//go by each duration
+			for(String dl : durationList)
+			{
+				//convert the string to double
+				double minutes = Double.parseDouble(dl);
 				
-				totalMinutes += joinMinutes;
+				//add the value to total duration
+				totalDuration += minutes;
+				//System.out.println(dl);
+				//System.out.println(minutes);
 			}
+					
 			//add the minute to the array list
-			minutesList.add(totalMinutes);
+			minutesList.add(totalDuration);
 			
 			//calculate payment
-			double payDay = 7 * (totalMinutes/60);
+			double payDay = 7 * (totalDuration/60);
 			
 			//add payDay to the array list
 			payList.add(payDay);
 			
-			//add to total payment
+			//add to the total payment
 			totalPayment += payDay;
-			
-			//System.out.println("Payment for " + dayDate + ": RM " + df.format(payDay));	
 			
 		}
 		
-		
-		System.out.println("\tDate\tMinutes\tAmount");
-		
+		System.out.println("\tDate\t\tDuration\tAmount");
+
 		//Using list iterator to print list String date
 		Iterator dateLitr = dateList.listIterator();
-		
+				
 		//Using list iterator to print list total minutes
 		Iterator minutesLitr = minutesList.listIterator();
-		
+				
 		//Using list iterator for day pay
-	    Iterator  payLitr=payList.listIterator();
-	    
-	  
-	      while(payLitr.hasNext()){
-	    	 System.out.print("\t" + dateLitr.next() );
-	    	 System.out.print("\t" + minutesLitr.next());
-	         System.out.print("\tRM" + df.format(payLitr.next()) + "\n");
-	      }
+		Iterator  payLitr=payList.listIterator();
 		
+		//loop untuk print all the list
+		while(payLitr.hasNext())
+		{
+			System.out.print("\t" + dateLitr.next() );
+			System.out.print("\t\t" + minutesLitr.next());
+			System.out.print("\t\tRM" + df.format(payLitr.next()) + "\n");
+		}
+			
+
 		//print total payment
 		System.out.println("\n\tTotal Payment for OT: RM" + df.format(totalPayment));
-		
-		
+				
 		System.out.println("\nThis Session is Expired");
 		
 		
